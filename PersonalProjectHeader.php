@@ -1,7 +1,8 @@
 <?php
 
-function printHeader($title){
-    ?>
+  function printHeader(&$title){
+
+?>
 <!doctype html>
 <html lang="en">
 
