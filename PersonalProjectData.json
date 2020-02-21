@@ -1,1 +1,16 @@
-[{"date_of_issue":"January 30 2020","firstname":"Lenzie","lastname":"Christen","type_of_issue":"Plumbing","issue_description":"The master bathroom toilet has a slow leak, causing the toilet to make noise","picture":"https:\/\/images.squarespace-cdn.com\/content\/v1\/5703fc57ab48defa8c1d369d\/1500831449275-25ZE7KJUWRQNKCSEXJ1O\/ke17ZwdGBToddI8pDm48kK9aG-xqN3EmePegYxQ8_VdZw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZUJFbgE-7XRK3dMEBRBhUpwgd-xNx_Do9JtNcA4DaKxfoqFhVSzS6bGVDhzIkiL--TGTePYqWuV1x9r9BS8papM\/image-asset.jpeg?format=1000w"},{"date_of_issue":"January 31 2020","firstname":"Jack","lastname":"Jones","type_of_issue":"Electrical","issue_description":"The kitchen electrical outlet by the stove will not work when I plug something in","picture":"https:\/\/images.unsplash.com\/photo-1565049981953-379c9c2a5d48?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1349&q=80"},{"date_of_issue":"Feburary 3 2020","firstname":"Jimmy","lastname":"Smith","type_of_issue":"Paint","issue_description":"Hallway paint has been chipping off, needs to be re-painted","picture":"https:\/\/images.sherwin-williams.com\/content_images\/sw-levelbdirpeelcrack.jpg"},{"date_of_issue":"Feburary 9 2020","firstname":"Alexander","lastname":"McArt","type_of_issue":"Exterior\/Interior","issue_description":"The screen for the living room window is broken and falling out\/ needs replaced","picture":"https:\/\/www.bing.com\/images\/blob?bcid=SKTq3wya5eQAjw"}]
+[
+    {
+        "firstname": "Eric",
+        "lastname": "Cartmen",
+        "picture": "https:\/\/www.google.com\/url?sa=i&url=https%3A%2F%2Fextension.unh.edu%2Fblog%2Ffall-good-time-plant-trees-and-shrubs&psig=AOvVaw12WTcErDV1w0QGNG0TA83e&ust=1582392356995000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCJD87YaV4-cCFQAAAAAdAAAAABAI",
+        "typeIssue": "Plumbing",
+        "issue": "toilet isn't working"
+    },
+    {
+        "firstname": "Alex",
+        "lastname": "Christen",
+        "picture": "https:\/\/www.google.com\/url?sa=i&url=https%3A%2F%2Fventwerx.com%2Fblog%2Fac-unit-cover%2F&psig=AOvVaw0ve4ZAUA4Ars9v7HXF4aQJ&ust=1582401440814000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCKCgg_K24-cCFQAAAAAdAAAAABAF",
+        "typeIssue": "hvac",
+        "issue": "Needs addressed!"
+    }
+]

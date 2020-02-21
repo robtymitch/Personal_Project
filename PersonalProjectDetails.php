@@ -43,11 +43,11 @@ $tenants = json_decode($personalProjectData,true);
  			<div class="col-8 my-5 mx-5">
 
  				<div class="card" style="width: 90%;">
- 					<img src="<?= $tenants[$_GET['id']]['picture'] ?>" class="card-img-top" alt="...">
+ 					<img src="<?= $tenants[$_GET['id']]['picture'] ?>" class="card-img-top" alt="Place holder for photo">
  					<div class="card-body">
  						<h5 class="card-title"><?= $tenants[$_GET['id']]['firstname'] . ' ' . $tenants[$_GET['id']]['lastname'] ?></h5>
- 						<p class="card-text"><?= $tenants[$_GET['id']]['type_of_issue'] ?></p>
- 						<p class="card-text"><?= $tenants[$_GET['id']]['issue_description'] ?></p>
+ 						<p class="card-text"><?= $tenants[$_GET['id']]['typeIssue'] ?></p>
+ 						<p class="card-text"><?= $tenants[$_GET['id']]['issue'] ?></p>
  						<a href="#" class="btn btn-primary">Completed</a>
  					</div>
  				</div>

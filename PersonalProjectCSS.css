@@ -16,6 +16,15 @@
   
 }
 
+.solidColor {
+  background-color: purple;
+}
+.ast:after {
+  
+    content:" *";
+    color: red;
+  
+}
  /* unvisited link */
  a:link {
     color:black;
