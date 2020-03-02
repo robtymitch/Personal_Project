@@ -1,15 +1,8 @@
 <?php
-//$tenants = json_decode(file_get_contents('PersonalProjectData.json),true'),true);
+
 require('PersonalProjectHeader.php');
-if (count($_POST) == 0) {
-    //display form fields
-
-} else {
-    //process our data
-    //make changes
-    //save the json file.
-}
-
+$personalProjectData = file_get_contents('../Data/PersonalProjectData.json');
+$tenants = json_decode($personalProjectData,true);
 ?>
 
 <!doctype html>
@@ -22,7 +15,7 @@ if (count($_POST) == 0) {
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="PersonalProjectCSS.css">
+    <link rel="stylesheet" href="../CSS/PersonalProjectCSS.css">
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display&display=swap" rel="stylesheet">
 
     <title>Tenant Portal</title>
@@ -48,23 +41,25 @@ if (count($_POST) == 0) {
                         <h5 class="card-title">Create a new Maintenance Request</h5><br />
 
                         <html>
-                        <form action="createnew.php" method="POST">
+                        <form action="transitionPages/modifyOld.php" method="POST">
                             <br />
                             <label class="ast" >First Name: </label>
-                            <input name="firstname"></input><br /><br />
+                            <input name="firstname" value="<?php echo $tenants[$_GET['id']]['firstname'] ?>"></input><br /><br />
                             <label class="ast" >Last Name: </label>
-                            <input name="lastname"></input><br /><br />
+                            <input name="lastname" value="<?php echo $tenants[$_GET['id']]['lastname'] ?>"></input><br /><br />
                             Picture:
-                            <input name="picture"></input><br /><br />
-                            <label class="ast" for="typeIssue">Type of Issue:</label><br />
+                            <input name="picture" value="<?php echo $tenants[$_GET['id']]['picture'] ?>"></input><br /><br />
+                            <label class="ast" for="typeIssue">Please reselect issue:</label><br />
                             <select id="typeIssue" name="typeIssue">
-                                <option value="plumbing">Plumbing</option>
-                                <option value="electrical">Electrical</option>
-                                <option value="hvac">Heating/Air Conditioning</option>
-                                <option value="general">General Purpose</option>
+                                <option value="Plumbing">Plumbing</option>
+                                <option value="Electrical">Electrical</option>
+                                <option value="Heating/Air Conditioning">Heating/Air Conditioning</option>
+                                <option value="General Purpose">General Purpose</option>
                             </select><br /><br />
                             Description of Issue<br />
-                            <textarea name="issue"></textarea><br /><br />
+                            <textarea name="issue"><?php echo $tenants[$_GET['id']]['issue'] ?></textarea><br /><br />
+                            
+                            <input type="hidden" id="id" name="id" value="<?= $_GET['id'] ?>">
 
                             <button class="btn btn-primary" type="submit" value="Submit">Submit</button>
                             

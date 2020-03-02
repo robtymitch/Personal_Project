@@ -1,18 +1,10 @@
  <?php
 
-$personalProjectData = file_get_contents('PersonalProjectData.json');
+$personalProjectData = file_get_contents('../Data/PersonalProjectData.json');
 $tenants = json_decode($personalProjectData,true);
 
-	if (!isset($_GET['id'])) {
-		echo 'Please enter the id of a member or visit the <a href="PersonalProjectDetails.php">index page</a>.';
-		die();
-	}
-	if ($_GET['id'] < 0 || $_GET['id'] > count($tenants) - 1) {
-		echo 'Please enter the id of a member or visit the <a href="PersonalProjectDetails.php">index page</a>.';
-		die();
-	}
+?>
 
-	?>
  <!doctype html>
  <html lang="en">
 
@@ -23,7 +15,7 @@ $tenants = json_decode($personalProjectData,true);
 
  	<!-- Bootstrap CSS -->
  	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
- 	<link rel="stylesheet" href="PersonalProjectCSS.css">
+ 	<link rel="stylesheet" href="../CSS/PersonalProjectCSS.css">
  	<title><?= $tenants[$_GET['id']]['firstname'] . ' ' . $tenants[$_GET['id']]['lastname'] ?></title>
  </head>
 
@@ -36,14 +28,14 @@ $tenants = json_decode($personalProjectData,true);
  	</div>
  	<div class="container">
  		<div class="row ">
- 			<div class="col-2 center my-5"><a href="PersonalProjectIndex.php"> <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-arrow-bar-left" fill="currentColor" viewBox="0 0 20 20" width="4.5em" height="4.5em">
+ 			<div class="col-2 center my-5"><a href="workOrders.php"> <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-arrow-bar-left" fill="currentColor" viewBox="0 0 20 20" width="4.5em" height="4.5em">
  						<path clip-rule="evenodd" fill-rule="evenodd" d="M 7.854 6.646 a 0.5 0.5 0 0 0 -0.708 0 l -3 3 a 0.5 0.5 0 0 0 0 0.708 l 3 3 a 0.5 0.5 0 0 0 0.708 -0.708 L 5.207 10 l 2.647 -2.646 a 0.5 0.5 0 0 0 0 -0.708 Z" />
  						<path clip-rule="evenodd" fill-rule="evenodd" d="M 12 10 a 0.5 0.5 0 0 0 -0.5 -0.5 H 5 a 0.5 0.5 0 0 0 0 1 h 6.5 a 0.5 0.5 0 0 0 0.5 -0.5 Z m 2.5 6 a 0.5 0.5 0 0 1 -0.5 -0.5 v -11 a 0.5 0.5 0 0 1 1 0 v 11 a 0.5 0.5 0 0 1 -0.5 0.5 Z" />
  					</svg></a></div>
  			<div class="col-8 my-5 mx-5">
 
  				<div class="card" style="width: 90%;">
- 					<img src="<?= $tenants[$_GET['id']]['picture'] ?>" class="card-img-top" alt="Place holder for photo">
+ 					<img src="<?= $tenants[$_GET['id']]['picture'] ?>" class="card-img-top" alt="Place holder for photoa;skdjljdfsjk">
  					<div class="card-body">
  						<h5 class="card-title"><?= $tenants[$_GET['id']]['firstname'] . ' ' . $tenants[$_GET['id']]['lastname'] ?></h5>
  						<p class="card-text"><?= $tenants[$_GET['id']]['typeIssue'] ?></p>

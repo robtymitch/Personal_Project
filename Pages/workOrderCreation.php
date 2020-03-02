@@ -1,14 +1,6 @@
 <?php
 //$tenants = json_decode(file_get_contents('PersonalProjectData.json),true'),true);
 require('PersonalProjectHeader.php');
-if (count($_POST)==0) {
-    //display form fields
-
-}else{
-    //process our data
-    //make changes
-    //save the json file.
-}
 
 ?>
 
@@ -22,7 +14,7 @@ if (count($_POST)==0) {
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="PersonalProjectCSS.css">
+    <link rel="stylesheet" href="../CSS/PersonalProjectCSS.css">
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display&display=swap" rel="stylesheet">
 
     <title>Tenant Portal</title>
@@ -41,17 +33,21 @@ if (count($_POST)==0) {
         <div class="row">
             <div class="col-1"></div>
             <div class="col-7">
-
-                <div class="card" style="width: 50rem; height: 30rem;">
+                <div class="card" style="width: 50rem; height: 40rem;">
                     <div style="background-color:purple"><img src="" class="card-img-top; solidColor" alt=""></div>
                     <div class="card-body">
                         <h5 class="card-title">Create a new Maintenance Request</h5><br />
-                        
+
                         <html>
-                        <form action="create.php" method="POST">
-                             <br />
+                        <form action="transitionPages/createnew.php" method="POST">
+                            <br />
+                            <label class="ast" >First Name: </label>
+                            <input name="firstname"></input><br /><br />
+                            <label class="ast" >Last Name: </label>
+                            <input name="lastname"></input><br /><br />
+                            Picture:
+                            <input name="picture"></input><br /><br />
                             <label class="ast" for="typeIssue">Type of Issue:</label><br />
-                            
                             <select id="typeIssue" name="typeIssue">
                                 <option value="plumbing">Plumbing</option>
                                 <option value="electrical">Electrical</option>
@@ -60,8 +56,9 @@ if (count($_POST)==0) {
                             </select><br /><br />
                             Description of Issue<br />
                             <textarea name="issue"></textarea><br /><br />
-                            
+
                             <button class="btn btn-primary" type="submit" value="Submit">Submit</button>
+                            
                         </form>
 
                         </html>

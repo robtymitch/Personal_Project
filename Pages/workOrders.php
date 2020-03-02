@@ -1,11 +1,11 @@
 <?php
-$tenants = json_decode(file_get_contents('PersonalProjectData.json'), true);
+$tenants = json_decode(file_get_contents('../Data/PersonalProjectData.json'), true);
 require('PersonalProjectHeader.php');
-require('projectFunctions.php');
+require('../Libraries/projectFunctions.php');
 printHeader($title);
 ?>
 
-<h1>Tenant Work Orders</h1>
+<h1>Work Orders</h1>
 <button type="button" class="btn btn-primary"><a href="workOrderCreation.php">Create work order</a></button><br /><br />
 <br />
 <?php
@@ -16,7 +16,7 @@ for ($i = 0; $i < count($tenants); $i++) {
             <h4 class="mt-0">' . $tenants[$i]['firstname'] . ' ' . $tenants[$i]['lastname'] . '</h4>
             <button type="button" class="btn btn-primary"><a href="PersonalProjectDetails.php?id=' . $i . '">View Work Order</a></button>
             <button type="button" class="btn btn-warning"><a href="modifyOrder.php?id=' . $i . '">Modify Work Order</a></button>
-            <button type="button" class="btn btn-danger"><a href="delete.php?id=' . $i . '">Delete</a></button>
+            <button type="button" class="btn btn-danger"><a href="transitionPages/delete.php?id=' . $i . '">Delete</a></button>
             
             
             </div>
