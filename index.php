@@ -29,12 +29,12 @@ session_start();
     <form action="Pages/transitionPages/signinUser.php" method="post">
 
 
-        <div class="container">
+        <div class="container" >
             <label for="email"><b>Username</b></label>
             <input type="text" placeholder="Enter Username" name="email" required>
 
             <label for="password"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="password" required>
+            <input type="password" placeholder="Enter Password" name="password" required minlength="8">
 
             <button type="submit">Login</button>
             <label>
