@@ -1,33 +1,10 @@
 <?php
-
-require('PersonalProjectHeader.php');
+require('../Libraries/Template.php');
 $personalProjectData = file_get_contents('../Data/PersonalProjectData.json');
 $tenants = json_decode($personalProjectData,true);
+Template::printHeader($title);
 ?>
 
-<!doctype html>
-<html lang="en">
-
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="../CSS/PersonalProjectCSS.css">
-    <link href="https://fonts.googleapis.com/css?family=Playfair+Display&display=swap" rel="stylesheet">
-
-    <title>Tenant Portal</title>
-</head>
-
-<body class="bgColor">
-    <div class="sidenav">
-        <a href="#">Home</a>
-        <a href="#">Payments</a>
-        <a href="#">Maintenance</a>
-        <a href="#">Contact Us</a>
-    </div>
     <div class="container indexFont ">
         <h3>Welcome to C & M Property Managment</h3>
         <br />
@@ -75,12 +52,6 @@ $tenants = json_decode($personalProjectData,true);
         </div>
 
 
-
-        <!-- Optional JavaScript -->
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-</body>
-
-</html>
+<?php 
+Template::showFooter();
+?>
