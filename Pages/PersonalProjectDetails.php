@@ -2,10 +2,30 @@
 
 $personalProjectData = file_get_contents('../Data/PersonalProjectData.json');
 $tenants = json_decode($personalProjectData,true);
-require('../Libraries/Template.php');
-Template::printHeader($title);
+
 ?>
 
+ <!doctype html>
+ <html lang="en">
+
+ <head>
+ 	<!-- Required meta tags -->
+ 	<meta charset="utf-8">
+ 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+ 	<!-- Bootstrap CSS -->
+ 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+ 	<link rel="stylesheet" href="../CSS/PersonalProjectCSS.css">
+ 	<title><?= $tenants[$_GET['id']]['firstname'] . ' ' . $tenants[$_GET['id']]['lastname'] ?></title>
+ </head>
+
+ <body class="bgColor">
+ 	<div class="sidenav">
+ 		<a href="#">About</a>
+ 		<a href="#">Services</a>
+ 		<a href="#">Clients</a>
+ 		<a href="#">Contact</a>
+ 	</div>
  	<div class="container">
  		<div class="row ">
  			<div class="col-2 center my-5"><a href="workOrders.php"> <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-arrow-bar-left" fill="currentColor" viewBox="0 0 20 20" width="4.5em" height="4.5em">
@@ -28,7 +48,11 @@ Template::printHeader($title);
  		</div>
  	</div>
  	</div>
+ 	<!-- Optional JavaScript -->
+ 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+ 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+ 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+ 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+ </body>
 
-<?php 
-Template::showFooter();
-?>
+ </html>
