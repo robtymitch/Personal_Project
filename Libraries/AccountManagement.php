@@ -2,113 +2,71 @@
 
 class AccountManagement 
 {
-    public $userid_field;
-    public $database_file;
-    public $signin_URL;
-    public $signout_URL;
 
-
-    public function is_logged($userid_field)
-    {
-        return isset($_SESSION[$userid_field]{
-        0});
+    // Checks if the user is logged in 
+    function isLogged(){
+        if (isset($_SESSION['User_Id'])){
+            return isset($_SESSION['User_Id']);
+        } else {
+            return FALSE;
+        }
     }
 
-    public function signout($signin_URL, $signout_URL, $userid_field)
-    {
-        if (!isset($_SESSION[$userid_field]{0})) //header('location: PersonalProjectIndex.php');
+    // Signs out the user that is logged in
+    function signout(){
         session_start();
-        $_SESSION = [];
         session_destroy();
-        header('location: ' . $signin_URL);
+        $_SESSION=[];
+        header('location: ../index.php');
     }
 
-
-    public function signin($database_file, $userid_field)
-    {
-        if (count($_POST) > 0) { // when user submits form:
-            // check if email is valid
-            
-            if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-                return 'The email you entered is not valid';
-            }
-            $_POST['email'] = strtolower($_POST['email']);
-
+    public function signin($data){
+        if (count($data) > 0){
+            // filter data
+            if(!isset($data['email']{0}) || !isset($data['password']{0})) return 'Please fill out both fields';
+            if(!filter_var($data['email'],FILTER_VALIDATE_EMAIL)) return 'The email address is not valid';
             // check if password is valid and check if password meets requirements
-            $_POST['password'] = trim($_POST['password']);
-            if (strlen($_POST['password']) < 8) {
+            $data['password'] = trim($data['password']);
+            if (strlen($data['password']) < 8) {
                 return 'The password must be at least 8 characters';
             }
+            // check if user is in the database
+            require_once('mySQLDataBase.php');
+            $pdo=MySQLDB::connect();
+            $query=$pdo->prepare('SELECT User_Id, User_Email, Password FROM users WHERE User_Email=?');
+            $query->execute([$data['email']]);
 
-            // if the database does not exist, we create it!!
-            if (!file_exists($database_file)) {
-                $h = fopen($database_file, 'w+');
-                fwrite($h, '');
-                fclose($h);
-            }
-            $h = fopen($database_file, 'r');
-
-            while (!feof($h)) {
-                $line = preg_replace('/\n/', '', fgets($h));
-                if (strstr($line, $_POST['email'])) {
-                    $line = explode(';', $line);
-                    if (!password_verify($_POST['password'], $line[1])) {
-                        fclose($h);
-                        return 'The password you entered does not match the stored password';
-                    }
-                    // passwords match!
-                    $_SESSION[$userid_field] = $_POST['email'];
-                    fclose($h);
-                    return '';
-                }
-            }
-            fclose($h);
-            return 'Email does not exist, please create an account <a href="index.php">HERE</a>';
-        }
-    }
-
-
-    public function signup($database_file)
-    {
-        if (count($_POST) > 0) { // when user submits form:
-            // check if email is valid
-            if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-                return 'The email you entered is not valid';
-            }
-            $_POST['email'] = strtolower($_POST['email']);
-
-            // check if password is valid and check if password meets requirements
-            $_POST['password'] = trim($_POST['password']);
-            if (strlen($_POST['password']) < 8) {
-                return 'The password must be at least 8 characters';
-            }
-
-            // if the database does not exist, we create it!!
-            if (!file_exists($database_file)) {
-                $h = fopen($database_file, 'w+');
-                fwrite($h, '<?php die() ?>' . "\n");
-                fclose($h);
-            }
-            // check if email is already there
-            $h = fopen($database_file, 'r');
-            while (!feof($h)) {
-                $line = fgets($h);
-                if (strstr($line, $_POST['email'])) return 'The email is already registered.';
-            }
-            fclose($h);
-
-            // encrypt password
-            $_POST['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
-
-            //append the data to a file
-            $h = fopen($database_file, 'a+');
-            fwrite($h, implode(';', [$_POST['email'], $_POST['password']]) . "\n");
-            fclose($h);
-
-            // welcome the user with a warm and cheerful message.
-            echo 'You successfully registered your account. Now you can <a href="../../index.php">Sign in</a>.';
+            if($query->rowCount() < 1) return 'The user is not registered';
+            // check if password is correct
+            $row = $query->fetch();
+            if (!password_verify($data['password'], $row['Password'])) return 'Incorrect password';
+            $_SESSION['User_Id'] = $row['User_Id'];
             return '';
+            $pdo = "null";
         }
     }
 
+    public function signup($data){
+		// filter data
+		if(!isset($data['email']{0}) || !isset($data['password']{0}) || !isset($data['first_name']{0}) || !isset($data['last_name']{0})) return 'Some fields are missing';
+        if(!filter_var($data['email'],FILTER_VALIDATE_EMAIL)) return 'The email address is not valid';
+        // check if password is valid and check if password meets requirements
+        $data['password'] = trim($data['password']);
+        if (strlen($data['password']) < 8) {
+            return 'The password must be at least 8 characters';
+        }
+        // check if user is already there
+		require_once('mySQLDataBase.php');
+		$pdo=MySQLDB::connect();
+		$query=$pdo->prepare('SELECT User_Email FROM users WHERE User_Email=?');
+		$query->execute([$data['email']]);
+		if($query->rowCount()>0) return 'The user is already registered';
+		// encrypt password
+		$data['password']=password_hash($data['password'],PASSWORD_DEFAULT);
+		// save the user
+		$query=$pdo->prepare('INSERT INTO users(User_Email,Password,First_Name,Last_Name) VALUES(?,?,?,?)');
+		$query->execute([$data['email'],$data['password'],$data['first_name'],$data['last_name']]);
+        return '';
+        $pdo = "null";
+    }
 }

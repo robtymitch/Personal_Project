@@ -19,13 +19,15 @@ class Template{
             <title> <?= $title ?> </title>
         </head>
 
-        <body class="bgColor indexFont">
-            <div class="cont">
-            <div class="sidenav">
-                <a href="#">About</a>
-                <a href="#">Services</a>
-                <a href="#">Clients</a>
-                <a href="#">Contact</a>
+        <body>
+            <div class="header">
+            <ul class="">
+                <li><a class="active" href="#home">Home</a></li>
+                <li><a href="#news">News</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="../Pages/signOut.php" class="signOut">Sign Out</a></li>
+            </ul>
             </div>
             <?php
                 $title = "Maintenance";

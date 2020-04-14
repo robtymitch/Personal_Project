@@ -1,9 +1,22 @@
- <?php
-
-$personalProjectData = file_get_contents('../Data/PersonalProjectData.json');
-$tenants = json_decode($personalProjectData,true);
+<?php
+session_start();
+require('../Libraries/AccountManagement.php');
+if(!AccountManagement::isLogged()) header('location: ../index.php');
 require('../Libraries/Template.php');
 Template::printHeader($title);
+require_once('../Libraries/dbSettings.php');
+require_once("../Libraries/mySQLDataBase.php");
+require_once('../Libraries/projectFunctions.php');
+
+
+$pdo=MySQLDB::connect();
+$query=$pdo->prepare('SELECT Type, Photo, Description, Tech_Id, Apt_Id FROM maintenance_requests WHERE Request_Id=?');
+$query->execute([$_GET['id']]);
+$row = $query->fetch();
+$tech = 'Not assigned yet';
+if(isset($row['Tech_Id'])){
+	$tech = $row['Tech_Id'];	
+}
 ?>
 
  	<div class="container">
@@ -15,12 +28,12 @@ Template::printHeader($title);
  			<div class="col-8 my-5 mx-5">
 
  				<div class="card" style="width: 90%;">
- 					<img src="<?= $tenants[$_GET['id']]['picture'] ?>" class="card-img-top" alt="Place holder for photoa;skdjljdfsjk">
+ 					<img src="<?= $row['Photo'] ?>" class="card-img-top" alt="Place holder for photo">
  					<div class="card-body">
- 						<h5 class="card-title"><?= $tenants[$_GET['id']]['firstname'] . ' ' . $tenants[$_GET['id']]['lastname'] ?></h5>
- 						<p class="card-text"><?= $tenants[$_GET['id']]['typeIssue'] ?></p>
- 						<p class="card-text"><?= $tenants[$_GET['id']]['issue'] ?></p>
- 						<a href="#" class="btn btn-primary">Completed</a>
+ 						<p class="card-text">Type: <?= $row['Type'] ?></p>
+						<p class="card-text">Description: <?= $row['Description'] ?></p>
+						<p class="card-text">Tech Id: <?= $tech ?></p>
+ 						<p class="card-text">Apartment Id: <?= $row['Apt_Id'] ?></p>
  					</div>
  				</div>
  			</div>

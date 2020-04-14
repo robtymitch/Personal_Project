@@ -1,6 +1,22 @@
-<?php
+<?php 
 session_start();
+require_once('Libraries/AccountManagement.php');
+if(AccountManagement::isLogged()) header('location: Pages/workOrders.php');
 require_once('Libraries/Template.php');
+require_once('Libraries/dbSettings.php');
+
+
+if(count($_POST)>0){
+	$error=AccountManagement::signin($_POST);
+	if(isset($error{0})){
+		$message=$error;
+		$alert_type='danger';
+	} else {
+        header('location: Pages/workOrders.php');
+    }
+}
+if(count($_POST)>0) echo '<div class="alert alert-'.$alert_type.'" role="alert">'.$message.'</div>';
+
 ?>
 
 
@@ -27,9 +43,7 @@ require_once('Libraries/Template.php');
         Please Log In
     </div>
 
-    <form action="Pages/transitionPages/signinUser.php" method="post">
-
-
+    <form method="post">
         <div class="container" >
             <label for="email"><b>Username</b></label>
             <input type="text" placeholder="Enter Username" name="email" required>

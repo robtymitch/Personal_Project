@@ -3,45 +3,43 @@
 class DataManipulation
 {
 
-	public static function readJSON($file, $index = null)
-	{
-		$h = fopen($file, 'r');
-		$output = '';
-		while (!feof($h)) $output .= fgets($h);
-		fclose($h);
-		$output = json_decode($output, true);
-		return !isset($index) ? $output : (isset($output[$index]) ? $output[$index] : null);
+	// date, type, photo, discription, techid, apartmentid
+	public function updateOrder($data){
+		//1. validate the data
+		if(!isset($data['type']{0})) return 'The type is missing';
+		if(!isset($data['description']{0})) return 'Please add a description';
+		//2. connect to the database
+		require_once('mySQLDataBase.php');
+		$pdo=MySQLDB::connect();
+		//3. insert the record
+		$query=$pdo->prepare('UPDATE maintenance_requests SET Type=?, Photo=?, Description=? WHERE Request_Id = ?');
+		$query->execute([$data['type'], $data['Photo'], $data['description'], $_GET['id']]);
+		//4. disconnect from the db
+		$pdo = "null";
 	}
 
-	public static function writeJSON($file, $data, $mode = 'w') 
-	{
-		if (!isset($data)) return;
-		if ($mode == 'a') {
-			if (file_exists($file)) $array = self::readJSON($file);
-			if (!is_array($array)) $array = [];
-			$array[] = $data;
-		} else $array = $data;
-		$h = fopen($file, 'w+');
-		fwrite($h, json_encode($array));
-		fclose($h);
+	public function delete($Request_Id){
+		// delete a work order;
+		require_once('mySQLDataBase.php');
+		$pdo=MySQLDB::connect();
+		$query=$pdo->prepare('DELETE from maintenance_requests WHERE Request_Id=?');
+		$query->execute([$Request_Id]);
+		//4. disconnect from the db
+		$pdo = "null";
 	}
 
-	public static function modifyJSON($file, $data, $index, $overwrite = false)
-	{
-		if (!file_exists($file) || !isset($data) || !isset($index)) return false;
-		$array = self::readJSON($file);
-		if (!is_array($array) || !isset($array[$index])) return false;
-		$array[$index] = $overwrite ? $data : array_merge($array[$index], $data);
-		self::writeJSON($file, $array, 'w+');
-		return true;
-	}
-	
-	public static function deleteJSON($file, $index)
-	{
-		$input = self::readJSON($file);
-		unset($input[$index]);
-		self::writeJSON($file, $input);
-		$jsonArr = array_values(self::readJSON($file));
-		self::writeJSON($file, $jsonArr);
+	public static function createWorkOrder($data){
+		//1. validate the data
+		if(!isset($data['type']{0})) return 'The type is missing';
+		if(!isset($data['description']{0})) return 'Please add a description';
+		//2. connect to the database
+		require_once('mySQLDataBase.php');
+		$pdo=MySQLDB::connect();
+		//3. insert the record
+		$query=$pdo->prepare('INSERT INTO maintenance_requests (User_Id, Date, Type, Photo, Description, Apt_Id) VALUES (?,?,?,?,?,?)');
+		$query->execute([$_SESSION['User_Id'], date("Y-m-d"), $data['type'], $data['Photo'], $data['description'], $data['Apt_Id']]);
+		//4. disconnect from the db
+		$pdo = "null";
 	}
 }
+
