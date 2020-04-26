@@ -33,7 +33,7 @@ class AccountManagement
             // check if user is in the database
             require_once('mySQLDataBase.php');
             $pdo=MySQLDB::connect();
-            $query=$pdo->prepare('SELECT User_Id, User_Email, Password FROM users WHERE User_Email=?');
+            $query=$pdo->prepare('SELECT User_Id, User_Email, Password, Role FROM users WHERE User_Email=?');
             $query->execute([$data['email']]);
 
             if($query->rowCount() < 1) return 'The user is not registered';
@@ -41,6 +41,7 @@ class AccountManagement
             $row = $query->fetch();
             if (!password_verify($data['password'], $row['Password'])) return 'Incorrect password';
             $_SESSION['User_Id'] = $row['User_Id'];
+            $_SESSION['Role'] = $row['Role'];
             return '';
             $pdo = "null";
         }

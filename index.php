@@ -4,17 +4,21 @@ require_once('Libraries/AccountManagement.php');
 if(AccountManagement::isLogged()) header('location: Pages/workOrders.php');
 require_once('Libraries/Template.php');
 require_once('Libraries/dbSettings.php');
+require_once('Libraries/AdminFunctions.php');
 
 
 if(count($_POST)>0){
 	$error=AccountManagement::signin($_POST);
 	if(isset($error{0})){
 		$message=$error;
-		$alert_type='danger';
-	} else {
-        header('location: Pages/workOrders.php');
+        $alert_type='danger';
+    } elseif(Admin::isAdmin($_SESSION)) {
+        header('location: Pages/adminPage.php');
+    } else {
+            header('location: Pages/workOrders.php');
     }
 }
+
 if(count($_POST)>0) echo '<div class="alert alert-'.$alert_type.'" role="alert">'.$message.'</div>';
 
 ?>

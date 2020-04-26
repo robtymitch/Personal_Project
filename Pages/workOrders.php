@@ -21,7 +21,6 @@ if(count($_POST)>0){
 }
 if(count($_POST)>0) echo '<div class="alert alert-'.$alert_type.'" role="alert">'.$message.'</div>';
 
-
     $pdo=MySQLDB::connect();
 		$query=$pdo->prepare('SELECT Request_Id, Date, Type, Photo FROM maintenance_requests WHERE User_Id=?');
     $query->execute([$_SESSION['User_Id']]);
