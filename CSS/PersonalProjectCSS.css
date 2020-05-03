@@ -1,3 +1,10 @@
+.scrollable {
+  overflow-y: auto;
+  height: 400px;
+  width: 90%;
+  background-color: #f5f5f5;
+}
+
 .header {
   margin: 2.5% 2.5%;
   padding: 0;
@@ -17,7 +24,7 @@
 .verticalLine {
 
   border-left: 6px solid green;
-  height: 500px;
+  height: 700px;
   left: 1.5%;
   margin-left: -3px;
   top: 0;

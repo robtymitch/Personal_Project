@@ -12,12 +12,12 @@ require_once('../Libraries/projectFunctions.php');
 require_once('../Libraries/mySQLDataBase.php');
 
 if(count($_POST)>0){
-	$error=Admin::createAdminWorkOrder($_POST);
+	$error=Admin::createTenant($_POST);
 	if(isset($error{0})){
 		$message=$error;
 		$alert_type='danger';
 	} else {
-        $message='The request has been created please return to the admin page to view it <a href="adminPage.php">HERE</a>';
+        $message='The tenant has been created please return to the admin page to view it <a href="adminPage.php">HERE</a>';
 		$alert_type='success';
     }
 }
@@ -25,8 +25,9 @@ if(count($_POST)>0){
 if(count($_POST)>0) echo '<div class="alert alert-'.$alert_type.'" role="alert">'.$message.'</div>';
 
 $pdo=MySQLDB::connect();
-$query=$pdo->prepare('SELECT Apt_Id FROM apartments');
+$query=$pdo->prepare('SELECT Apt_Id FROM apartments where User_Id IS NULL');
 $query->execute();
+
 ?>
     <div class="container indexFont ">
         <div class="row">
@@ -35,8 +36,31 @@ $query->execute();
                 <div class="card" style="width: 50rem; height: 40rem;">
                     <div style="background-color:purple"><img src="" class="card-img-top; solidColor" alt=""></div>
                     <div class="card-body">
-                        <h5 class="card-title">Create a new Maintenance Request</h5><br />
+                        <h5 class="card-title">Create a new tenant</h5><br />
                         <form method="POST">
+                            <br />
+                            Email: <br />
+                            <textarea name="User_Email"></textarea>
+                            <br />
+                            First Name: 
+                            <br />
+                            <textarea name="First_Name"></textarea>
+                            <br />
+                            Last Name: 
+                            <br />
+                            <textarea name="Last_Name"></textarea>
+                            <br />
+                            Password:
+                            <br />
+                            <textarea name="Password"></textarea>
+                            <br />
+                            Role:
+                            <br />
+                            <select id="Role" name="Role">
+                                <option value="Admin">Admin</option>
+                                <option value="Tech">Technician</option>
+                                <option value="Tenant">Tenant</option>
+                            </select>
                             <br />
                             <label class="ast" for="Apt_Id">Select Apartment: </label><br />
                             <select id="Apt_Id" name="Apt_Id">
@@ -47,15 +71,6 @@ $query->execute();
                             ?>
                             </select>
                             <br />
-                            <label class="ast" for="typeIssue">Type of Issue:</label><br />
-                            <select id="typeIssue" name="type">
-                                <option value="plumbing">Plumbing</option>
-                                <option value="electrical">Electrical</option>
-                                <option value="hvac">Heating/Air Conditioning</option>
-                                <option value="general">General Purpose</option>
-                            </select><br /><br />
-                            Description of Issue<br />
-                            <textarea name="description"></textarea><br /><br />
                             <button class="btn btn-primary" type="submit" value="Submit">Submit</button>
                         </form>
 
