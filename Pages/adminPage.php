@@ -22,7 +22,7 @@ require_once('../Libraries/mySQLDataBase.php');
             <div class="scrollable">
                 <?php
                     $pdo=MySQLDB::connect();
-                    $query=$pdo->prepare('SELECT User_Email, First_Name, Last_Name, Amount_Due from users INNER JOIN billing on users.User_Id = billing.User_Id WHERE Role != "Admin"');
+                    $query=$pdo->prepare('SELECT users.User_Id, User_Email, First_Name, Last_Name, Amount_Due from users INNER JOIN billing on users.User_Id = billing.User_Id WHERE Role != "Admin"');
                     $query->execute();
                     while ($row = $query->fetch()){
                         echo '<div class="media">
@@ -31,7 +31,8 @@ require_once('../Libraries/mySQLDataBase.php');
                             <h4 class="mt-0">First Name: ' . $row['First_Name'] . '</h4>
                             <h4 class="mt-0">Last Name: ' . $row['Last_Name'] . '</h4>
                             <h4 class="mt-0">Amount Due: ' . $row['Amount_Due'] . '</h4>
-                            <br />
+                            <button type="button" class="btn btn-warning"><a href="adminModifyUser.php?id=' . $row['User_Id'] . '">Modify Tenant</a></button>
+                            <button type="button" class="btn btn-danger"><a a href="TransitionPages/adminDeleteTenant.php?id=' . $row['User_Id'] . '">Delete</a></button><br /><br />
                         </div>
                     </div>';
                     }

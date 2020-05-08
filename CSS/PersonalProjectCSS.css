@@ -196,3 +196,27 @@ img.avatar {
 .mb {
   font-weight:bold;
 }
+.main-Photo {
+  background-image: linear-gradient( rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url("https://cutewallpaper.org/21/wallpaper-city-night/Wallpaper-of-Bridge,-Cincinnati,-City,-Night,-USA-background-.jpg");
+  
+    height: auto;
+    width:100%;
+}
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: gray;
+  color: white;
+  text-align: center;
+  padding-top: 1%;
+  padding-bottom: 1%
+}
+.b{
+  color:white;
+  font-size: 20px;
+}
+.moveRight{
+  margin-left:5%;
+}

@@ -47,7 +47,7 @@ if(count($_POST)>0) echo '<div class="alert alert-'.$alert_type.'" role="alert">
                     <h4 class="mb">Last Name:</h4>
                     <input type="text" name="last_name" required /><br />
                     <h4 class="mb">Password:</h4>
-                    <input type="password" name="password" required minlength="8" /><br />
+                    <input type="password" name="password" type='hidden' required minlength="8" /><br />
                     <button class="my-2" type="submit">Create account</button>
                 </form>
             </div>

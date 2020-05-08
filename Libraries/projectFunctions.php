@@ -41,5 +41,11 @@ class DataManipulation
 		//4. disconnect from the db
 		$pdo = "null";
 	}
+
+	public function asyDelete($data) {
+		require_once('mySQLDataBase.php');
+		$pdo=MySQLDB::connect();
+		
+	}
 }
 

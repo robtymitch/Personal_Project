@@ -1,4 +1,5 @@
 <?php
+
 class Admin {
 
     public static function isAdmin($session){
@@ -38,22 +39,19 @@ class Admin {
 		//3. insert into users
 		$query=$pdo->prepare('INSERT INTO users (User_Email, First_Name, Last_Name, Password, Role, Apt_Id) VALUES (?,?,?,?,?,?)');
 		$query->execute([$data['User_Email'], $data['First_Name'], $data['Last_Name'], $data['Password'], $data['Role'], $data['Apt_Id']]);
-
+		
 		//update the apartments
-		$query=$pdo->prepare('SELECT User_Id from users WHERE Apt_Id=?');
-		$query->execute([$data['Apt_Id']]);
-		$row = $query->fetch();
+		$userID=$pdo->lastInsertId();
 		$query=$pdo->prepare('UPDATE apartments set User_Id=? WHERE Apt_Id=?');
-		$query->execute([$row['User_Id'], $data['Apt_Id']]);
+		$query->execute([$userID, $data['Apt_Id']]);
 
 		//insert the bill
-		$query=$pdo->prepare('SELECT User_Id, Cost_Of_Rent from apartments WHERE User_Id=?');
-		$query->execute([$row['User_Id']]);
-		$row=$query->fetch();
+		$query=$pdo->prepare('SELECT Cost_Of_Rent from apartments WHERE User_Id=?');
+		$query->execute([$userID]);
+		$costOfRent=$query->fetchColumn();
 		$query=$pdo->prepare('INSERT INTO billing (User_Id, Amount_Due, Due_Date, Past_Due, Apt_Id) values (?,?,?,?,?)');
-		$query->execute([$row['User_Id'], $row['Cost_Of_Rent'], date("Y-m-d"), 0, $data['Apt_Id']]);
-		//4. disconnect from the db
-		$pdo = "null";
+		$query->execute([$userID, $costOfRent, date("Y-m-d"), 0, $data['Apt_Id']]);
+		
 	}
 
     public static function createAdminWorkOrder($data){
@@ -88,6 +86,43 @@ class Admin {
 		//4. disconnect from the db
 		$pdo = "null";
 	}
+
+	public static function adminDeleteTenant($id){
+		require_once('mySQLDataBase.php');
+		$pdo=MySQLDB::connect();
+		//prepare for deletion
+		$query=$pdo->prepare('DELETE from users WHERE "User_Id"=?');
+		$query->execute([$id]);
+		$pdo='null';
+	}
+
+	public static function adminModifyTenant($data){
+		require_once('mySQLDataBase.php');
+		$pdo=MySQLDB::connect();
+		$query=$pdo->prepare('UPDATE users SET User_Email=?, First_Name=?, Last_Name=?, Role=?, Apt_Id=? WHERE User_Id=?');
+		$query->execute([$data['User_Email'], $data['First_Name'], $data['Last_Name'], $data['Role'], $data['Apt_Id'], $data['User_Id']]);
+		//update apartments
+		$query=$pdo->prepare('SELECT Apt_Id FROM apartments WHERE User_Id=?');
+		$query->execute([$data['User_Id']]);
+		$row=$query->fetch();
+		$query=$pdo->prepare('UPDATE apartments SET User_Id=NULL WHERE Apt_Id=?');
+		$query->execute([$row['Apt_Id']]);
+		$query=$pdo->prepare('UPDATE apartments SET User_Id=? WHERE Apt_Id=?');
+		$query->execute([$data['User_Id'],$data['Apt_Id']]);
+		
+		//update billing
+		//$query=$pdo->prepare('SELECT Bill_Id FROM billing WHERE User_Id=?');
+		//$query->execute([$data['User_Id']]);
+		//$row1=$query->fetch();
+		$query=$pdo->prepare('SELECT User_Id, Cost_Of_Rent FROM apartments WHERE Apt_Id=?');
+		$query->execute([$data['Apt_Id']]);
+		$row2=$query->fetch();
+		$query=$pdo->prepare('UPDATE billing SET Amount_Due=? WHERE User_Id=?');
+		$query->execute([$row2['Cost_Of_Rent'],$row2['User_Id']]);
+		
+		$pdo="null";
+	}
 }
+
 
 ?>

@@ -52,7 +52,7 @@ $query->execute();
                             <br />
                             Password:
                             <br />
-                            <textarea name="Password"></textarea>
+                            <input type="password" textarea name="Password" required minlength="8"></textarea>
                             <br />
                             Role:
                             <br />

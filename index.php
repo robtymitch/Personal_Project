@@ -1,25 +1,26 @@
-<?php 
+<?php
 session_start();
 require_once('Libraries/AccountManagement.php');
-if(AccountManagement::isLogged()) header('location: Pages/workOrders.php');
+if (AccountManagement::isLogged()) header('location: Pages/workOrders.php');
 require_once('Libraries/Template.php');
 require_once('Libraries/dbSettings.php');
 require_once('Libraries/AdminFunctions.php');
 
 
-if(count($_POST)>0){
-	$error=AccountManagement::signin($_POST);
-	if(isset($error{0})){
-		$message=$error;
-        $alert_type='danger';
-    } elseif(Admin::isAdmin($_SESSION)) {
+if (count($_POST) > 0) {
+    $error = AccountManagement::signin($_POST);
+    if (isset($error{
+        0})) {
+        $message = $error;
+        $alert_type = 'danger';
+    } elseif (Admin::isAdmin($_SESSION)) {
         header('location: Pages/adminPage.php');
     } else {
-            header('location: Pages/workOrders.php');
+        header('location: Pages/workOrders.php');
     }
 }
 
-if(count($_POST)>0) echo '<div class="alert alert-'.$alert_type.'" role="alert">'.$message.'</div>';
+if (count($_POST) > 0) echo '<div class="alert alert-' . $alert_type . '" role="alert">' . $message . '</div>';
 
 ?>
 
@@ -38,37 +39,38 @@ if(count($_POST)>0) echo '<div class="alert alert-'.$alert_type.'" role="alert">
     <title>Christen & Mitchell Properties</title>
 </head>
 
-<body>
-    <div class="cntr">
-        Welcome to Christen & Mitchell Property Managment
+<body class="main-Photo">
+    <div>
+        <div class="cntr " style="color: white">
+            Welcome to Christen & Mitchell Property Managment
 
-    </div><br />
-    <div class='cntr'>
-        Please Log In
+        </div><br />
+        <div class='cntr' style="color: white">
+            Please Log In
+        </div>
+
+        <form method="post">
+            <div class="container">
+                <label for="email"><b class="b">Username</b></label>
+                <input type="text" placeholder="Enter Username" name="email" required>
+
+                <label for="password"><b class="b">Password</b></label>
+                <input type="password" placeholder="Enter Password" name="password" required minlength="8">
+
+                <button type="submit">Login</button>
+                
+            </div>
+
+            <div class="container" style="background-color:#f1f1f1">
+                <button type="button" class="cancelbtn"><a href="Pages/user_signup.php">Create New Account</a></button>
+                <button type="button" class="cancelbtn">Cancel</button>
+                <span class="psw">Forgot <a href="#">password?</a></span>
+            </div>
+        </form>
     </div>
-
-    <form method="post">
-        <div class="container" >
-            <label for="email"><b>Username</b></label>
-            <input type="text" placeholder="Enter Username" name="email" required>
-
-            <label for="password"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="password" required minlength="8">
-
-            <button type="submit">Login</button>
-            <label>
-                <input type="checkbox" checked="checked" name="remember"> Remember me
-            </label>
-        </div>
-
-        <div class="container" style="background-color:#f1f1f1">
-            <button type="button" class="cancelbtn"><a href="Pages/user_signup.php">Create New Account</a></button>
-            <button type="button" class="cancelbtn">Cancel</button>
-            <span class="psw">Forgot <a href="#">password?</a></span>
-        </div>
+</body>
 
 
-    </form>
 <?php
 Template::showFooter();
 ?>
